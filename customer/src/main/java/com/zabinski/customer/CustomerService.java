@@ -1,7 +1,10 @@
 package com.zabinski.customer;
 
-public record CustomerService() {
 
+import org.springframework.stereotype.Service;
+
+@Service // we want this to be bean
+public record CustomerService(CustomerRepository customerRepository) {
 
     public void registerCustomer(CustomerRegistrationRequest request) {
 
@@ -11,5 +14,10 @@ public record CustomerService() {
                 .lastName(request.lastName())
                 .email(request.lastName())
                 .build();
+
+        // todo: check if email valid
+        // todo: check if email not taken
+        customerRepository.save(customer);
+
     }
 }
